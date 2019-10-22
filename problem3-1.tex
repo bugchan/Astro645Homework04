@@ -1,0 +1,89 @@
+\section{The 1-D Warmup}
+
+Interpolation is the process of finding the values within the known points, also called support points. We can do a local interpolation, which is just using nearby support points or a global interpolation using all support points. 
+
+Linear interpolation uses a straight line between the support points.
+
+Polynomial interpolation, as its name, uses a polynomial function where the coefficients are linear. The coefficient can be found by constructing the following matrices and using LU decomposition or SVD:
+\begin{equation}
+    \begin{bmatrix}
+        1.0 &   x_0 &   x_0^2 & \dots &x_0^n\\
+        1.0 &   x_0 &   x_0^2 & \dots &x_0^n\\
+        \vdots& \vdots& \vdots&         &\vdots\\
+        1.0 &   x_n &   x_n^2 & \dots &x_n^n\\
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        c_0   \\
+        c_1   \\
+        \vdots   \\
+        c_n   \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        y_0  \\
+        y_1 \\
+        \vdots \\
+        y_n \\
+    \end{bmatrix}
+\end{equation}
+
+Another method to do a polynomial interpolation is by using Neville's Algorithm. This method first finds the polynomial of degree 0 that fits the support points then uses that information to find the polynomial of a higher degree. It continues recursively until it find the polynomial of the degree desired. In this way it creates a tableau like to find the value of the desired point. 
+
+The polynomial interpolation error can be calculated for the upper limits as
+\begin{equation}
+    f(x)-P_n(x) = \frac{1}{(n+1)!}f^{n+1}(\Psi)\prod^n_{i=0}(x-x_i)
+    \label{eq:polyError}
+\end{equation}
+
+where n is the order of the polynomial function and $x_i$ are the support points. 
+
+Cubic Spline Interpolation uses the constraints that the interpolating functions needs to be \\
+smooth on both sides of a point and the second derivative is continuous. Optionally you can add another constraint that specifies the behavior of the endpoints. For this case, the code uses the natural boundary which means that the spline is a straight line at these points.
+\begin{figure}
+    \centering
+    \includegraphics{CodeAndFigures/hw04p1Plot.png}
+    \caption{Plot that shows four different interpolations within the same support points.}
+    \label{fig:p1interp}
+\end{figure}
+
+Figure \ref{fig:p1interp} shows the support points given for this problem and the linear, polynomial of order 6, polynomial using Neville's algorithm and cubic spline interpolation. Figure \ref{fig:p1interpError} shows the fractional error for each of the interpolations. The fractional error was calculated as follows
+\begin{equation}
+    \mathrm{error}_{frac}=1-\frac{\mathrm{Interp}}{y(x)}
+\end{equation}
+
+ where $y(x)$ is the real values of the function given by
+\begin{equation}
+    y(x) = \frac{\sin{x}}{x}
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics{CodeAndFigures/hw04p1Error.png}
+    \caption{The fractional error of four different interpolations: Linear, Polynomial using SVD, Polynomial using Neville's and Cubic Spline.}
+    \label{fig:p1interpError}
+\end{figure}
+
+As expected, the linear error consistently gives higher errors followed by the polynomial interpolation using SVD, then by the cubic spline and finally the polynomial interpolation using Neville's algorithm gives the lowest error out of the four. Additionally, we can see that at the support points the error is minimum showing that the interpolation is very close to the known values as expected of a good interpolation.
+
+\begin{figure}
+    \centering
+    \includegraphics{CodeAndFigures/hw04p1ErrorPolynomial.png}
+    \caption{Comparison of the fractional error of the polynomial interpolation using SVD and Neville's algortihm and the upper bound polynomial error calculated from equation \ref{eq:polyError}.}
+    \label{fig:p1PolyError}
+\end{figure}
+
+Figure \ref{fig:p1PolyError} shows a comparison of the fractional error of the polynomial obtained from SVD and Neville's algorithm and the upper bound error calculated using equation \ref{eq:polyError} for the polynomial interpolation.
+
+We can see that the upper bound is overall lower than the fractional error of the interpolation using SVD which is not what it is expected. The upper bound error is an estimate of the maximum error we can expect to have and I expected to be over the fractional error of polynomial interpolation using SVD. After revising my code, I couldn't find what I did wrong to get this outcome. I suspect that since we are using a polynomial of order 6 and have 9 support points, my system is over-determined. In this case, my coefficients are the least square solution of the matrix and because of this is not exact at the support points.
+
+In contrast, the upper bound error is higher than the fractional error from the polynomial interpolation using Neville's algorithm. This behavior is the expected. 
+
+Figure \ref{fig:p1PolyError6} shows the same information as \ref{fig:p1PolyError}. In this we are repeating the same approach of calculating the coefficients using SVD but selecting only a subset of 6 consecutive support points. In this case, the fractional error is mostly lower than the polynomial error for the selected range of support points. Outside of the range the error gets higher. This is expected since we are interpolating and have no information outside of the support points used.
+
+\begin{figure}
+    \centering
+    \includegraphics{CodeAndFigures/hw04p1ErrorPolynomial6.png}
+    \caption{Example of how selecting only 7 values of the support points for the polynomial interpolation changes the fractional error to be lower than the upper bound error for those points.}
+    \label{fig:p1PolyError6}
+\end{figure}

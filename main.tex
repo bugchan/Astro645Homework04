@@ -1,0 +1,141 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4cm, left=2cm, right=2cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{appendix}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage{esint}
+\usepackage[utf8]{inputenc}
+\usepackage[inline]{enumitem} %allows inline itemize or enumerate
+
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \tiny,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{orange}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+\setlength{\tabcolsep}{6pt}
+
+%Astronomical units
+\DeclareSIUnit \parsec  {pc}
+\DeclareSIUnit \year    {yr}
+
+% Edit these as appropriate
+% \newcommand\course{ASTRO 732}
+% \newcommand\coursename{Computational Methods for Astrophysics}
+\newcommand\course{ASTRO 645}
+\newcommand\coursename{Astrophysical Dynamics}
+\newcommand\hwnumber{4}
+\newcommand\myname{Sandra Bustamante}  
+%allows to number the last equation of align.
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\course \\ Homework \hwnumber}
+\chead{\textbf{\Large Potential Theory}}
+\rhead{\myname \\ Due October 29, 2019}
+\lfoot{}
+\cfoot{\coursename}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+%redefines subsections to be letters instead of numbers so 1.a normal way is 1.1
+% \arabic (1, 2, 3, ...)
+% \alph (a, b, c, ...)
+% \Alph (A, B, C, ...)
+% \roman (i, ii, iii, ...)
+% \Roman (I, II, III, ...)
+\renewcommand\thesubsection{\thesection.\alph{subsection}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%=====================BEGIN DOCUMENT===========================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\twocolumn
+\lstset{style=Python}
+
+% textwidth is \the\textwidth \\
+% column width is \the\columnwidth \\
+% textheight is \the\textheight
+
+\input{problem3-1.tex}
+\clearpage
+
+% \input{problem3-2.tex}
+% \clearpage
+
+% \input{problem3-3.tex}
+% \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%=====================Add Bibliography=========================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% %plain style sorts the reference list by alphabetical order of the first author’s last name.
+% \bibliography{references} % Entries are in the "refs.bib" file
+
+% % %\include{name} %name without extension. insert in new page
+
+% \clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%=====================Appendix=================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \appendix
+
+% \lstset{caption={Astro732\_HW04P1.py}, style=Python}
+% \section[]{Python code Problem 1} 
+% \label{sec:CodeHw04p1}
+% \lstset{label={Astro732Hw04P1.py}}
+% \lstinputlisting[language=Python]{CodeAndFigures/Astro732_HW04P1.py}
+
+% \clearpage
+
+% \lstset{caption={Astro732\_Hw04P2.py}, style=Python}
+% \section[]{Python code Problem 2} 
+% \label{sec:CodeHw04p2}
+% \lstset{label={Astro732HW04P2BestR0.py}}
+% \lstinputlisting[language=Python]{CodeAndFigures/Astro732_HW04P2_BestR0.py}
+
+% \clearpage
+
+% \lstset{caption={Astro732\_Hw04p3.py}, style=Python}
+% \section[]{Python code Problem 3} 
+% \label{sec:CodeHw03p3}
+% \lstset{label={Astro732Hw04p3.py}}
+% \lstinputlisting[language=Python]{CodeAndFigures/Astro732_HW04P3.py}
+
+
+\end{document}
