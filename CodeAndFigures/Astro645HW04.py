@@ -11,3 +11,14 @@ import matplotlib.pyplot as plt
 
 #%% Definitions
 
+#%%
+ x0=0
+ v0=0
+ N=1000
+ t=np.linspace(0,100,N)
+ h=t[1]-t[0]
+
+ x=np.zeros(N)
+ v=np.zeros(N)
+
+

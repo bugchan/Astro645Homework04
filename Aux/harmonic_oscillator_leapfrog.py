@@ -7,44 +7,43 @@ N = 10000
 t = linspace(0,100,N)
 dt = t[1] - t[0]
 
-###############################################################################
-# functions
+#%% functions
 def integrate(F,x0,v0,gamma):
     ###########################################################################
     # arrays are allocated and filled with zeros
     x = zeros(N)
     v = zeros(N)
-    E = zeros(N)    
-    
-    ###########################################################################    
+    E = zeros(N)
+
+    ###########################################################################
     # initial conditions
     x[0] = x0
     v[0] = v0
-    
+
     ###########################################################################
     # integration
     fac1 = 1.0 - 0.5*gamma*dt
     fac2 = 1.0/(1.0 + 0.5*gamma*dt)
-    
+
     for i in range(N-1):
          v[i + 1] = fac1*fac2*v[i] - fac2*dt*x[i] + fac2*dt*F[i]
          x[i + 1] = x[i] + dt*v[i + 1]
          E[i] += 0.5*(x[i]**2 + ((v[i] + v[i+1])/2.0)**2)
-    
+
     E[-1] = 0.5*(x[-1]**2 + v[-1]**2)
-    
+
     ###########################################################################
     # return solution
     return x,v,E
 
-###############################################################################
-# numerical integration
+#%% numerical integration
 F = zeros(N)
 x1,v1,E1 = integrate(F,0.0,1.0,0.0) # x0 = 0.0, v0 = 1.0, gamma = 0.0
 x2,v2,E2 = integrate(F,0.0,1.0,0.05) # x0 = 0.0, v0 = 1.0, gamma = 0.01
 x3,v3,E3 = integrate(F,0.0,1.0,0.4) # x0 = 0.0, v0 = 1.0, gamma = 0.5
 
-###############################################################################
+#%% Plot
+
 rcParams["axes.grid"] = True
 rcParams['font.size'] = 14
 rcParams['axes.labelsize'] = 18
@@ -67,10 +66,10 @@ legend(loc="center right")
 
 tight_layout()
 
-###############################################################################
-# driven oscillator
+
+#%% driven oscillator
 def force(f0,t,w,T):
-          return f0*cos(w*t)*exp(-t**2/T**2) 
+          return f0*cos(w*t)*exp(-t**2/T**2)
 
 F1 = zeros(N)
 F2 = zeros(N)
@@ -101,8 +100,8 @@ xlabel("Time")
 rcParams['legend.fontsize'] = 16.0
 legend(loc=(0.3,0.27),ncol=3)
 
-###############################################################################
-# oscillator driven at resonance plus damping
+
+#%% oscillator driven at resonance plus damping
 x1,v1,E1 = integrate(F1,0.0,0.0,0.0)
 x2,v2,E2 = integrate(F1,0.0,0.0,0.01)
 x3,v3,E3 = integrate(F1,0.0,0.0,0.1)
@@ -124,6 +123,4 @@ xlabel("Time")
 rcParams['legend.fontsize'] = 14.0
 legend(loc="upper left")
 
-###############################################################################
 show()
-###############################################################################
