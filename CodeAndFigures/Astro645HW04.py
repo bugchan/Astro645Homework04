@@ -3,6 +3,11 @@
 """
 Created on Tue Oct 22 14:40:25 2019
 
-@author: sbustamanteg
+@author: Sandra Bustamante
 """
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+#%% Definitions
 
