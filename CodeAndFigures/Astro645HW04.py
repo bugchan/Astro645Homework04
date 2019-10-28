@@ -9,71 +9,14 @@ Created on Tue Oct 22 14:40:25 2019
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.constants as constants
+import NumericIntegrations as NI
+import SetupPlots as SP
 
 #%% Definitions
-def setupPlot(singleColumn):
-  
-  if singleColumn:
-    fontsize=10
-    width=6.9
-    linewidth=1
-  else:
-    fontsize=8
-    width=3.39
-    linewidth=0.8
-    
-  height=width*(np.sqrt(5.)-1.)/2.  
-  params = {'axes.labelsize': fontsize,
-            'axes.titlesize': fontsize,
-            'font.size': fontsize,
-            'legend.fontsize': fontsize-2,
-            'xtick.labelsize': fontsize,
-            'ytick.labelsize': fontsize,
-            'lines.linewidth': linewidth,
-            'grid.linewidth' : linewidth*.8,
-            'axes.axisbelow' : True
-            }
-  plt.rcParams.update(params)
-  return width,height
-
 def dvdt(t,x,v):
   #Pendulum equation of motion
   dvdt=-constants.g*np.sin(x)
   return dvdt
-
-def leapfrog(dvdt,a,b,N,IV):
-  h = (b-a)/float(N)
-  t=np.linspace(a,b,N)
-  x=np.zeros(N)
-  v=np.zeros(N)
-  x[0], v[0] = IV
-  for n in np.arange(1,N):
-    k1=x[n-1]+0.5*h*v[n-1]
-    v[n]=v[n-1]+h*dvdt(t,k1,v)
-    x[n]=k1+0.5*h*v[n]
-  return t, x, v
-  
-def RK4(dvdt, a, b, N, IV):
-    h = (b-a)/float(N)    # determine step-size
-    t = np.arange(a,b,h)  # create mesh
-    x = np.zeros(N)       # initialize x
-    v = np.zeros(N)       # initialize x
-    x[0], v[0] = IV       # set initial values
-    # apply Fourth Order Runge-Kutta Method
-    for i in np.arange(1,N):
-        k1= h*dvdt(t[i-1], x[i-1], v[i-1])
-        j1= h*v[i-1]
-        k2= h*dvdt(t[i-1]+h/2.0, x[i-1]+j1/2.0,
-                   v[i-1]+k1/2.0)
-        j2= h*(v[i-1]+k1/2.0)
-        k3= h*dvdt(t[i-1]+h/2.0, x[i-1]+j2/2.0,
-                   v[i-1]+k2/2.0)
-        j3= h*(v[i-1]+k2/2.0)
-        k4= h*dvdt( t[i], x[i-1] + j3, v[i-1] + k3)
-        j4= h*(v[i-1] + k3)
-        v[i] =v[i-1] + (k1 + 2.0*k2 + 2.0*k3 + k4)/6.0
-        x[i] =x[i-1] + (j1 + 2.0*j2 + 2.0*j3 + j4)/6.0
-    return t, x, v
 
 def energy(v,x):
   #Energy of pendulum
@@ -83,14 +26,13 @@ def energy(v,x):
 #%% Pendulum
 
 e=1e-2
-Ecrit=2*constants.g # 
+Ecrit=2*constants.g #
 #rotation,libration, near unstable equilibrium
 t0=np.array([0,0,0])
 x0=np.array([-1.3*np.pi,.5,np.pi-e])
 v0=np.array([.4,0,0])*constants.g
 
 T=1/np.sqrt(constants.g) #Period
-#
 
 N=100000
 a=0
@@ -100,29 +42,29 @@ IV=np.concatenate((x0.reshape(3,1),v0.reshape(3,1)),
 
 #%%Rotation
 
-tRot,xRot,vRot=leapfrog(dvdt,a,b,N,IV[0])
-tRotRK,xRotRK,vRotRK=RK4(dvdt,a,b,N,IV[0])
+tRot,xRot,vRot=NI.leapfrog(dvdt,a,b,N,IV[0])
+tRotRK,xRotRK,vRotRK=NI.RK4(dvdt,a,b,N,IV[0])
 ERot=energy(vRot,xRot)
 ERotRK=energy(vRotRK,xRotRK)
 errRot=ERot-ERotRK
 
 #%%Libration
-tLib,xLib,vLib=leapfrog(dvdt,a,b,N,IV[1])
-tLibRK,xLibRK,vLibRK=RK4(dvdt,a,b,N,IV[1])
+tLib,xLib,vLib=NI.leapfrog(dvdt,a,b,N,IV[1])
+tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,N,IV[1])
 ELib=energy(vLib, xLib)
 ELibRK=energy(vLibRK, xLibRK)
 errLib=ELib-ELibRK
 
 #%%Near unstable position
-tUns, xUns,vUns=leapfrog(dvdt,a,b,N,IV[2])
-tUnsRK,xUnsRK,vUnsRK=RK4(dvdt,a,b,N,IV[2])
+tUns, xUns,vUns=NI.leapfrog(dvdt,a,b,N,IV[2])
+tUnsRK,xUnsRK,vUnsRK=NI.RK4(dvdt,a,b,N,IV[2])
 EUns=energy(vUns,xUns)
 EUnsRK=energy(vUnsRK,xUnsRK)
 errUns=EUns-EUnsRK
 
 
 #%% Plot Phase Space Curve
-width,height=setupPlot(singleColumn=True)
+width,height=SP.setupPlot(singleColumn=True)
 fig1 = plt.figure(figsize=(width,.5*height))
 grid = plt.GridSpec(1,2)
 
@@ -152,8 +94,8 @@ ax4.set_title('Runge-Kutta Integration')
 ax4.grid()
 ax4.legend()
 
-#%% Plot Energy vs time 
-#width,height=setupPlot(singleColumn=True)
+#%% Plot Energy vs time
+#width,height=SP.setupPlot(singleColumn=True)
 fig2 = plt.figure(figsize=(width,height))
 grid1 = plt.GridSpec(1,1)
 
@@ -170,7 +112,7 @@ ax2.grid()
 ax2.legend()
 
 #%%  Phase Space Plot of Unstable equilibrium
-width,height=setupPlot(singleColumn=True)
+width,height=SP.setupPlot(singleColumn=True)
 fig3 = plt.figure(figsize=(width,height))
 #grid1 = plt.GridSpec(1,1)
 
@@ -183,7 +125,7 @@ ax3.grid()
 ax3.legend()
 
 #%% Plot comparing Leapfrog and RK4
-width,height=setupPlot(singleColumn=True)
+width,height=SP.setupPlot(singleColumn=True)
 fig4 = plt.figure(figsize=(width,.5*height))
 gridf4 = plt.GridSpec(1,3)
 
@@ -223,7 +165,9 @@ ax6.legend(loc='upper left')
 fig4.tight_layout()
 
 #%% Error plot
-width,height=setupPlot(singleColumn=False)
+width,height=SP.setupPlot(singleColumn=False)
 fig5 = plt.figure(figsize=(width,height))
 gridf5 = plt.GridSpec(1,1)
 
+ax7 = fig5.add_subplot(gridf5[0,0])
+ax7.plot(errLib)
