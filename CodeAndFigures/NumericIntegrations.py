@@ -8,18 +8,6 @@ Created on Mon Oct 28 17:08:16 2019
 
 import numpy as np
 
-def leapfrog(dvdt,a,b,N,IV):
-  h = (b-a)/float(N)
-  t=np.linspace(a,b,N)
-  x=np.zeros(N)
-  v=np.zeros(N)
-  x[0], v[0] = IV
-  for n in np.arange(1,N):
-    k1=x[n-1]+0.5*h*v[n-1]
-    v[n]=v[n-1]+h*dvdt(t,k1,v)
-    x[n]=k1+0.5*h*v[n]
-  return t, x, v
-
 def leapfrog2D(dvdt,a,b,h,IV):
   #h = (b-a)/float(N)
   t=np.arange(a,b+h,h)
@@ -32,9 +20,9 @@ def leapfrog2D(dvdt,a,b,h,IV):
     x[n]=k1+0.5*h*v[n]
   return t, x, v
 
-def RK4(dvdt, a, b, N, IV):
-    h = (b-a)/float(N)    # determine step-size
+def RK4(dvdt, a, b, h, IV):
     t = np.arange(a,b,h)  # create mesh
+    N=int((b-a)/h)
     x = np.zeros(N)       # initialize x
     v = np.zeros(N)       # initialize x
     x[0], v[0] = IV       # set initial values
