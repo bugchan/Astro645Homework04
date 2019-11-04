@@ -29,7 +29,7 @@ def setupPlot(singleColumn):
             'lines.linewidth': linewidth,
             'grid.linewidth' : linewidth*.8,
             'axes.axisbelow' : True,
-            'pgf.rcfonts' : False
+            'pgf.rcfonts' : False,
             }
   plt.rcParams.update(params)
   return width,height
