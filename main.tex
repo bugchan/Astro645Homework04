@@ -10,7 +10,7 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{hyperref}
-\usepackage{siunitx}
+\usepackage{siunitx} % Formats the units and values
 \usepackage{appendix}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -20,6 +20,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage[inline]{enumitem} %allows inline itemize or enumerate
 \usepackage{pdfpages}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csv
+
+% Setup siunitx:
+\sisetup{
+  round-mode          = places, % Rounds numbers
+  round-precision     = 2, % to 2 places
+}
 
 
 \hypersetup{%
