@@ -20,6 +20,18 @@ def leapfrog(dvdt,a,b,N,IV):
     x[n]=k1+0.5*h*v[n]
   return t, x, v
 
+def leapfrog2D(dvdt,a,b,h,IV):
+  #h = (b-a)/float(N)
+  t=np.arange(a,b+h,h)
+  x=np.zeros((len(t),2))
+  v=np.zeros((len(t),2))
+  x[0], v[0] = IV
+  for n in np.arange(1,len(t)):
+    k1=x[n-1]+0.5*h*v[n-1]
+    v[n]=v[n-1]+h*dvdt(t,k1,v)
+    x[n]=k1+0.5*h*v[n]
+  return t, x, v
+
 def RK4(dvdt, a, b, N, IV):
     h = (b-a)/float(N)    # determine step-size
     t = np.arange(a,b,h)  # create mesh

@@ -28,7 +28,10 @@ def setupPlot(singleColumn):
             'ytick.labelsize': fontsize,
             'lines.linewidth': linewidth,
             'grid.linewidth' : linewidth*.8,
-            'axes.axisbelow' : True
+            'axes.axisbelow' : True,
+            'pgf.rcfonts' : False
             }
   plt.rcParams.update(params)
   return width,height
+
+#def 3x1Plot():
