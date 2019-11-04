@@ -34,30 +34,30 @@ v0=np.array([.4,0,0])*constants.g
 
 T=1/np.sqrt(constants.g) #Period
 
-N=100000
 a=0
 b=T*10000
+h=0.001
 IV=np.concatenate((x0.reshape(3,1),v0.reshape(3,1)),
                   axis=1)
 
 #%%Rotation
 
-tRot,xRot,vRot=NI.leapfrog(dvdt,a,b,N,IV[0])
-tRotRK,xRotRK,vRotRK=NI.RK4(dvdt,a,b,N,IV[0])
+tRot,xRot,vRot=NI.leapfrog(dvdt,a,b,h,IV[0])
+tRotRK,xRotRK,vRotRK=NI.RK4(dvdt,a,b,h,IV[0])
 ERot=energy(vRot,xRot)
 ERotRK=energy(vRotRK,xRotRK)
 errRot=ERot-ERotRK
 
 #%%Libration
-tLib,xLib,vLib=NI.leapfrog(dvdt,a,b,N,IV[1])
-tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,N,IV[1])
+tLib,xLib,vLib=NI.leapfrog(dvdt,a,b,h,IV[1])
+tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,h,IV[1])
 ELib=energy(vLib, xLib)
 ELibRK=energy(vLibRK, xLibRK)
 errLib=ELib-ELibRK
 
 #%%Near unstable position
-tUns, xUns,vUns=NI.leapfrog(dvdt,a,b,N,IV[2])
-tUnsRK,xUnsRK,vUnsRK=NI.RK4(dvdt,a,b,N,IV[2])
+tUns, xUns,vUns=NI.leapfrog(dvdt,a,b,h,IV[2])
+tUnsRK,xUnsRK,vUnsRK=NI.RK4(dvdt,a,b,h,IV[2])
 EUns=energy(vUns,xUns)
 EUnsRK=energy(vUnsRK,xUnsRK)
 errUns=EUns-EUnsRK
@@ -106,7 +106,7 @@ ax2.plot(tRot,ERot,'--',label='Rotation')
 #ax2.plot(tUns,EUns,':',label='Near Unstable Equilibrium')
 #ax2.hlines(Ecrit,a,b,label='Critical Energy')
 ax2.set_xlabel('Time [s]')
-ax2.set_xlim(a,b/(.01*N))
+ax2.set_xlim(a,b)
 ax2.set_ylabel('Total Energy $E_T$ []')
 ax2.grid()
 ax2.legend()
