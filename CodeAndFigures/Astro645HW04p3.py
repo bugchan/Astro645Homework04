@@ -170,7 +170,7 @@ LL3=angularMomentum(x3,v3)
 
 #%% Plot
 width,height=SP.setupPlot(singleColumn=True)
-fig1 = plt.figure(figsize=(width,height))
+fig1 = plt.figure(figsize=(.9*width,.5*height))
 grid = plt.GridSpec(1,3)
 
 theta=np.linspace(0,2*np.pi,100)
@@ -204,7 +204,7 @@ ax3.set_aspect('equal')
 ax3.grid()
 
 fig1.tight_layout()
-fig1.savefig('ToomrePotentialOrbits.pgf')
+fig1.savefig('ToomrePotentialOrbits.pdf')
 
 #%% Plot Phase Space
 #width,height=SP.setupPlot(singleColumn=True)
@@ -234,14 +234,14 @@ width,height=SP.setupPlot(singleColumn=True)
 fig2 = plt.figure(figsize=(width,.5*height))
 grid2 = plt.GridSpec(1,2)
 
-ax4 = fig1.add_subplot(grid2[0,0])
+ax4 = fig2.add_subplot(grid2[0,0])
 ax4.plot(t1,EL1,label='Orbit 1')
 ax4.plot(t2,EL2,label='Orbit 2')
 ax4.plot(t3,EL3,label='Orbit 3')
 ax4.legend(loc='upper right')
 ax4.set_ylabel(r'$E_T$')
 
-ax5 = fig1.add_subplot(grid2[0,1])
+ax5 = fig2.add_subplot(grid2[0,1])
 ax5.plot(t1,LL1,label='Orbit 1')
 ax5.plot(t2,LL2,label='Orbit 2')
 ax5.plot(t3,LL3,label='Orbit 3')
@@ -249,4 +249,4 @@ ax5.legend(loc='upper right')
 ax5.set_ylabel(r'$L$')
 
 fig2.tight_layout()
-fig2.savefig('EnergyMomentumPlot.pgf')
+fig2.savefig('EnergyMomentumPlot.pdf')
