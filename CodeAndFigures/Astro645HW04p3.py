@@ -240,6 +240,7 @@ ax4.plot(t2,EL2,label='Orbit 2')
 ax4.plot(t3,EL3,label='Orbit 3')
 ax4.legend(loc='upper right')
 ax4.set_ylabel(r'$E_T$')
+ax4.set_xlabel('Time')
 
 ax5 = fig2.add_subplot(grid2[0,1])
 ax5.plot(t1,LL1,label='Orbit 1')
@@ -247,14 +248,15 @@ ax5.plot(t2,LL2,label='Orbit 2')
 ax5.plot(t3,LL3,label='Orbit 3')
 ax5.legend(loc='upper right')
 ax5.set_ylabel(r'$L$')
+ax5.set_xlabel('Time')
 
 fig2.tight_layout()
 fig2.savefig('EnergyMomentumPlot.pdf')
 
 #%% Save values to csv file
 #head=('Orbit','x'   ,'y'   ,'v_x' ,'v_y')
-csvArray=[[1   ,x10[0],x10[1],v10[0],v10[1]],
-          [2   ,x20[0],x20[1],v20[0],v20[1]],
-          [3   ,x30[0],x30[1],v30[0],v30[1]]]
+csvArray=[[1   ,x10[0],x10[1],v10[0],v10[1],r1min,r1max],
+          [2   ,x20[0],x20[1],v20[0],v20[1],r2min,r2max],
+          [3   ,x30[0],x30[1],v30[0],v30[1],r3min,r3max]]
 
 np.savetxt('ToomreOrbitsData.csv',csvArray,delimiter=',')
