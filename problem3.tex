@@ -31,19 +31,19 @@ Using the initial values listed on table \ref{tab:ToomreOrbits}, we can calculat
 		column name=Orbit, % name of first column
 		%column type={S},string type
 		},  % use siunitx for formatting
-      display columns/1/.style={
-		column name=$x$,
+      display columns/1/.style={column name=$x$,
 		%column type={S},string type
 		},
-	  display columns/2/.style={
-		column name=$y$,
+	  display columns/2/.style={column name=$y$,
 		%column type={S},string type
 		},
-	  display columns/3/.style={
-		column name=$v_x$,
+	  display columns/3/.style={column name=$v_x$,
 		%column type={S},string type
 		},
-	 display columns/4/.style={
+	 display columns/4/.style={column name=$v_y$,
+		%column type={S},string type
+		},
+			 display columns/4/.style={
 		column name=$v_y$,
 		%column type={S},string type
 		},
@@ -74,27 +74,21 @@ where
 \end{align}.
 
 Figure \ref{fig:conservedQuants} shows the total energy and the angular momentum of these rosette orbits are being conserved through time. 
-
-The inner and outer radius of the orbits are found by finding the roots of
-\begin{equation}
-    E_T - U(r) - \frac{L^2}{r^2} = 0
-\end{equation}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%=========================SUBSECTION===========================
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
-% (b) Compute the energy and angular momentum of your trial orbits
-% (e.g. using the initial conditions). Compute the inner and outer
-% radii of the tube (the turning points) using the conserved quantities
-% and check these values against your direct orbit integration.
-
-
-
-\begin{figure*}
+\begin{figure*}[h!]
     \centering
     \includegraphics{CodeAndFigures/EnergyMomentumPlot.pdf}
     \caption{Left: Energy and Right: Angular Momentum of the rosette orbits in function with time.}
     \label{fig:conservedQuants}
 \end{figure*}
+
+The inner and outer radius of the orbits are found by finding the roots of
+\begin{equation}
+    E_T - U(r) - \frac{L^2}{r^2} = 0
+    \label{eq:rootfunc}
+\end{equation}
+
+The bisect method was used to find the roots. The bisect methods finds the roots of a given function within a range of values to evaluate the function. The range for $r$ was determined by first plotting the equation \ref{eq:rootfunc} and determining visually were a sign change occurred. The value for inner and outer radius for each trial orbit is listed in table \ref{tab:ToomreOrbits} and is shown in Figure \ref{fig:ToomreOrbits} in orange and green. 
+
+
+
+
