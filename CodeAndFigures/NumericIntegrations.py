@@ -8,11 +8,11 @@ Created on Mon Oct 28 17:08:16 2019
 
 import numpy as np
 
-def leapfrog2D(dvdt,a,b,h,IV):
+def leapfrog2D(dvdt,a,b,h,IV,dim=2):
   #h = (b-a)/float(N)
   t=np.arange(a,b+h,h)
-  x=np.zeros((len(t),2))
-  v=np.zeros((len(t),2))
+  x=np.zeros((len(t),dim))
+  v=np.zeros((len(t),dim))
   x[0], v[0] = IV
   for n in np.arange(1,len(t)):
     k1=x[n-1]+0.5*h*v[n-1]
@@ -20,14 +20,14 @@ def leapfrog2D(dvdt,a,b,h,IV):
     x[n]=k1+0.5*h*v[n]
   return t, x, v
 
-def RK4(dvdt, a, b, h, IV):
-    t = np.arange(a,b,h)  # create mesh
-    N=int((b-a)/h)
-    x = np.zeros(N)       # initialize x
-    v = np.zeros(N)       # initialize x
+def RK4(dvdt, a, b, h, IV,dim=2):
+    t = np.arange(a,b+h,h)  # create time
+    #N=int((b-a)/h)
+    x = np.zeros((len(t),dim))       # initialize x
+    v = np.zeros((len(t),dim))       # initialize x
     x[0], v[0] = IV       # set initial values
     # apply Fourth Order Runge-Kutta Method
-    for i in np.arange(1,N):
+    for i in np.arange(1,len(t)):
         k1= h*dvdt(t[i-1], x[i-1], v[i-1])
         j1= h*v[i-1]
         k2= h*dvdt(t[i-1]+h/2.0, x[i-1]+j1/2.0,
