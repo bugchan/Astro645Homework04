@@ -46,7 +46,7 @@ def totalEnergy(x,v):
 #%% Common parameters for all orbits
 h=1e-3
 A=0
-B=200 #s
+B=100 #s
 
 a=1/2
 
@@ -67,12 +67,18 @@ t2,x2,v2=NI.leapfrog2D(dvdt,A,B,h,IV)
 U2,K2,E2=totalEnergy(x2,v2)
 
 #%% Orbit 3
-x30=np.array([3,0])
-v30=np.array([0,0.6])
+#x30=np.array([3,0])
+#v30=np.array([0,0.6])
+x30=np.array([0,1])
+v30=np.array([0.9,0])
+#x30=np.array([0,1.1])
+#v30=np.array([.01,0.301])
 
-IV=np.concatenate((x30.reshape(1,2),v30.reshape(1,2)),axis=0)
+IV=np.concatenate((x30.reshape(1,2),
+                   v30.reshape(1,2)),axis=0)
 t3,x3,v3=NI.leapfrog2D(dvdt,A,B,h,IV)
 U3,K3,E3=totalEnergy(x3,v3)
+print(E3)
 
 #%% plot x-y
 width,height=SP.setupPlot(singleColumn=True)
@@ -85,7 +91,7 @@ ax1.set_aspect('equal')
 ax1.grid()
 #ax1.set_ylim(-1,1)
 
-ax2 = fig1.add_subplot(grid[0,1])
+ax2 = fig1.add_subplot(grid[0,1],sharey=ax1)
 ax2.plot(x2[:,0],x2[:,1])
 ax2.set_aspect('equal')
 ax2.grid()

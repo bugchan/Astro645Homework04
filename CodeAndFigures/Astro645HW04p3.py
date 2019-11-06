@@ -255,10 +255,17 @@ fig2.tight_layout()
 fig2.savefig('EnergyMomentumPlot.pdf')
 
 #%% Save values to csv file
-head='Orbit,$x$,$y$,$v_x$,$v_y$,$r_{inner}$,r_{outer}'
-csvArray=[[1   ,x10[0],x10[1],v10[0],v10[1],r1min,r1max],
-          [2   ,x20[0],x20[1],v20[0],v20[1],r2min,r2max],
-          [3   ,x30[0],x30[1],v30[0],v30[1],r3min,r3max]]
+names=np.array(['Orbit','$x$','$y$',
+                '$v_x$','$v_y$',
+                '$r_{inner}$','r_{outer}'])
+csvArray=np.array(
+        [[1   ,x10[0],x10[1],v10[0],v10[1],r1min,r1max],
+         [2   ,x20[0],x20[1],v20[0],v20[1],r2min,r2max],
+         [3   ,x30[0],x30[1],v30[0],v30[1],r3min,r3max]])
 
-np.savetxt('ToomreOrbitsData.csv',csvArray,
-           delimiter=',',fmt='%1.3f', header=head)
+ab = np.zeros(names.size, dtype=[('var1', 'U6'), ('var2', float)])
+ab['var1'] = names
+ab['var2'] = csvArray
+
+np.savetxt('ToomreOrbitsData.csv',ab, fmt="%10s %10.3f",
+           delimiter=',')
