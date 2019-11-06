@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import NumericIntegrations as NI
 import SetupPlots as SP
 import scipy.optimize as Opt
+import pandas as pd
 
 #%% For potential U=-(1+r**2)**(-1/2)
 
@@ -177,7 +178,7 @@ grid = plt.GridSpec(1,3)
 theta=np.linspace(0,2*np.pi,100)
 
 ax1 = fig1.add_subplot(grid[0,0])
-ax1.plot(x1[:,0],x1[:,1],label='Orbit 1')
+ax1.plot(x1[:,0],x1[:,1],label='Orbit 0')
 ax1.plot(r1max*np.cos(theta),r1max*np.sin(theta))
 ax1.plot(r1min*np.cos(theta),r1min*np.sin(theta))
 ax1.legend(loc='lower right')
@@ -187,7 +188,7 @@ ax1.set_aspect('equal')
 ax1.grid()
 
 ax2 = fig1.add_subplot(grid[0,1])
-ax2.plot(x2[:,0],x2[:,1],label='Orbit 2')
+ax2.plot(x2[:,0],x2[:,1],label='Orbit 1')
 ax2.plot(r2max*np.cos(theta),r2max*np.sin(theta))
 ax2.plot(r2min*np.cos(theta),r2min*np.sin(theta))
 ax2.legend(loc='lower right')
@@ -196,7 +197,7 @@ ax2.set_aspect('equal')
 ax2.grid()
 
 ax3 = fig1.add_subplot(grid[0,2])
-ax3.plot(x3[:,0],x3[:,1],label='Orbit 3')
+ax3.plot(x3[:,0],x3[:,1],label='Orbit 2')
 ax3.plot(r3max*np.cos(theta),r3max*np.sin(theta))
 ax3.plot(r3min*np.cos(theta),r3min*np.sin(theta))
 ax3.legend(loc='lower right')
@@ -232,21 +233,21 @@ fig1.savefig('ToomrePotentialOrbits.pdf')
 
 #%% Plot Total Energy
 width,height=SP.setupPlot(singleColumn=True)
-fig2 = plt.figure(figsize=(width,.5*height))
+fig2 = plt.figure(figsize=(.9*width,.5*height))
 grid2 = plt.GridSpec(1,2)
 
 ax4 = fig2.add_subplot(grid2[0,0])
-ax4.plot(t1,EL1,label='Orbit 1')
-ax4.plot(t2,EL2,label='Orbit 2')
-ax4.plot(t3,EL3,label='Orbit 3')
+ax4.plot(t1,EL1,label='Orbit 0')
+ax4.plot(t2,EL2,label='Orbit 1')
+ax4.plot(t3,EL3,label='Orbit 2')
 ax4.legend(loc='upper right')
 ax4.set_ylabel(r'$E_T$')
 ax4.set_xlabel('Time')
 
 ax5 = fig2.add_subplot(grid2[0,1])
-ax5.plot(t1,LL1,label='Orbit 1')
-ax5.plot(t2,LL2,label='Orbit 2')
-ax5.plot(t3,LL3,label='Orbit 3')
+ax5.plot(t1,LL1,label='Orbit 0')
+ax5.plot(t2,LL2,label='Orbit 1')
+ax5.plot(t3,LL3,label='Orbit 2')
 ax5.legend(loc='upper right')
 ax5.set_ylabel(r'$L$')
 ax5.set_xlabel('Time')
@@ -255,17 +256,13 @@ fig2.tight_layout()
 fig2.savefig('EnergyMomentumPlot.pdf')
 
 #%% Save values to csv file
-names=np.array(['Orbit','$x$','$y$',
-                '$v_x$','$v_y$',
-                '$r_{inner}$','r_{outer}'])
-csvArray=np.array(
-        [[1   ,x10[0],x10[1],v10[0],v10[1],r1min,r1max],
-         [2   ,x20[0],x20[1],v20[0],v20[1],r2min,r2max],
-         [3   ,x30[0],x30[1],v30[0],v30[1],r3min,r3max]])
+names=np.array(['x','y',
+                'v_x','v_y',
+                'r_{inner}','r_{outer}'])
+orbit1=np.array([x10[0],x10[1],v10[0],v10[1],r1min,r1max])
+orbit2=np.array([x20[0],x20[1],v20[0],v20[1],r2min,r2max])
+orbit3=np.array([x30[0],x30[1],v30[0],v30[1],r3min,r3max])
 
-ab = np.zeros(names.size, dtype=[('var1', 'U6'), ('var2', float)])
-ab['var1'] = names
-ab['var2'] = csvArray
-
-np.savetxt('ToomreOrbitsData.csv',ab, fmt="%10s %10.3f",
-           delimiter=',')
+a=[orbit1, orbit2, orbit3]
+df = pd.DataFrame(a,columns=names)
+df.to_csv('ToomreOrbitsData.csv', float_format='%1.2f',index_label='Orbit')

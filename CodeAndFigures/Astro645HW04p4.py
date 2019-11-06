@@ -10,7 +10,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import NumericIntegrations as NI
 import SetupPlots as SP
+import pandas as pd
 
+#%% Definitions
 def potential(X):
     #assuming X=[x,y]
     a=1/2
@@ -82,107 +84,111 @@ print(E3)
 
 #%% plot x-y
 width,height=SP.setupPlot(singleColumn=True)
-fig1 = plt.figure(figsize=(width,height))
+fig1 = plt.figure(figsize=(.9*width,.5*height))
 grid = plt.GridSpec(1,3)
 
 ax1 = fig1.add_subplot(grid[0,0])
-ax1.plot(x1[:,0],x1[:,1])
-ax1.set_aspect('equal')
+ax1.plot(x1[:,0],x1[:,1], label='Orbit 0')
 ax1.grid()
-#ax1.set_ylim(-1,1)
+ax1.set_xlabel('x-position')
+ax1.set_ylabel('y-position')
+ax1.legend(loc='lower right')
 
 ax2 = fig1.add_subplot(grid[0,1],sharey=ax1)
-ax2.plot(x2[:,0],x2[:,1])
-ax2.set_aspect('equal')
+ax2.plot(x2[:,0],x2[:,1],label='Orbit 1')
 ax2.grid()
+ax2.set_xlabel('x-position')
+ax2.legend(loc='lower right')
 
 ax3 = fig1.add_subplot(grid[0,2])
-ax3.plot(x3[:,0],x3[:,1])
-ax3.set_aspect('equal')
+ax3.plot(x3[:,0],x3[:,1],label='Orbit 2')
 ax3.grid()
+ax3.set_xlabel('x-position')
+ax3.legend(loc='lower right')
 
 fig1.tight_layout()
+fig1.savefig('NonAxisSymetricOrbits.pdf')
 
 #%% plot phase space
 width,height=SP.setupPlot(singleColumn=True)
-fig2 = plt.figure(figsize=(width,1.5*height))
-grid = plt.GridSpec(3,2)
+fig2 = plt.figure(figsize=(.9*width,1*height))
+grid = plt.GridSpec(2,3)
 
 ax4 = fig2.add_subplot(grid[0,0])
-ax4.plot(x1[:,0],v1[:,0])
-
+ax4.plot(x1[:,0],v1[:,0],label='Orbit 0')
 ax4.grid()
+ax4.legend(loc='lower right')
+ax4.set_ylabel(r'$v_x$')
+ax4.set_xlabel(r'$x$')
 
-ax5 = fig2.add_subplot(grid[0,1])
-ax5.plot(x1[:,1],v1[:,1])
-
+ax5 = fig2.add_subplot(grid[1,0])
+ax5.plot(x1[:,1],v1[:,1],label='Orbit 0')
 ax5.grid()
+ax5.legend(loc='lower right')
+ax5.set_ylabel(r'$v_y$')
+ax5.set_xlabel(r'$y$')
 
-ax6 = fig2.add_subplot(grid[1,0])
-ax6.plot(x2[:,0],v2[:,0])
-
+ax6 = fig2.add_subplot(grid[0,1])
+ax6.plot(x2[:,0],v2[:,0],label='Orbit 1')
 ax6.grid()
+ax6.legend(loc='lower right')
+ax6.set_xlabel(r'$x$')
 
 ax7 = fig2.add_subplot(grid[1,1])
-ax7.plot(x2[:,1],v2[:,1])
-
+ax7.plot(x2[:,1],v2[:,1],label='Orbit 1')
 ax7.grid()
+ax7.legend(loc='lower right')
+ax7.set_xlabel(r'$y$')
 
-ax8 = fig2.add_subplot(grid[2,0])
-ax8.plot(x3[:,0],v3[:,0])
-
+ax8 = fig2.add_subplot(grid[0,2])
+ax8.plot(x3[:,0],v3[:,0],label='Orbit 2')
 ax8.grid()
+ax8.legend(loc='lower right')
+ax8.set_xlabel(r'$x$')
 
-ax9 = fig2.add_subplot(grid[2,1])
-ax9.plot(x3[:,1],v3[:,1])
-
+ax9 = fig2.add_subplot(grid[1,2])
+ax9.plot(x3[:,1],v3[:,1],label='Orbit 2')
 ax9.grid()
+ax9.legend(loc='lower right')
+ax9.set_xlabel(r'$y$')
 
 fig2.tight_layout()
-
-#%% Surface of section plot x vs xdot when v=E-potential
-
-index=np.argwhere(np.isclose(x1[:,1],0,atol=1.5*h))
-indexpos=np.argwhere(x1[index,1]>0)
-indexneg=np.argwhere(x1[index,1]<0)
-
-np.interp()
-
-
-#%% plot UKE
-width,height=SP.setupPlot(singleColumn=True)
-fig3 = plt.figure(figsize=(width,height))
-grid = plt.GridSpec(1,2)
+fig1.savefig('NonAxisSymetricPhaseSpace.pdf')
 
 #%% Plot Total Energy
-width,height=SP.setupPlot(singleColumn=True)
-fig2 = plt.figure(figsize=(width,.5*height))
-grid2 = plt.GridSpec(1,2)
+#width,height=SP.setupPlot(singleColumn=True)
+#fig2 = plt.figure(figsize=(width,.5*height))
+#grid2 = plt.GridSpec(1,2)
+#
+#ax4 = fig2.add_subplot(grid2[0,0])
+#ax4.plot(t1,E1,label='Orbit 1')
+#ax4.plot(t2,E2,label='Orbit 2')
+#ax4.plot(t3,E3,label='Orbit 3')
+#ax4.legend(loc='upper right')
+#ax4.set_ylabel(r'$E_T$')
+#ax4.set_xlabel('Time')
+#ax4.grid()
+#
+##ax5 = fig2.add_subplot(grid2[0,1])
+##ax5.plot(t1,L1,label='Orbit 1')
+##ax5.plot(t2,L2,label='Orbit 2')
+##ax5.plot(t3,L3,label='Orbit 3')
+##ax5.legend(loc='upper right')
+##ax5.set_ylabel(r'$L$')
+##ax5.set_xlabel('Time')
+#
+##fig2.tight_layout()
+##fig2.savefig('EnergyMomentumPlot.pdf')
 
-ax4 = fig2.add_subplot(grid2[0,0])
-ax4.plot(t1,E1,label='Orbit 1')
-ax4.plot(t2,E2,label='Orbit 2')
-ax4.plot(t3,E3,label='Orbit 3')
-ax4.legend(loc='upper right')
-ax4.set_ylabel(r'$E_T$')
-ax4.set_xlabel('Time')
+#%% Save Data to csv file
+names=np.array(['x'    ,'y'   , 'v_x','v_y'])
+orbit1=np.array([x10[0],x10[1],v10[0],v10[1]])
+orbit2=np.array([x20[0],x20[1],v20[0],v20[1]])
+orbit3=np.array([x30[0],x30[1],v30[0],v30[1]])
 
-#ax5 = fig2.add_subplot(grid2[0,1])
-#ax5.plot(t1,L1,label='Orbit 1')
-#ax5.plot(t2,L2,label='Orbit 2')
-#ax5.plot(t3,L3,label='Orbit 3')
-#ax5.legend(loc='upper right')
-#ax5.set_ylabel(r'$L$')
-#ax5.set_xlabel('Time')
+array=[orbit1, orbit2, orbit3]
+df = pd.DataFrame(array,columns=names)
+df.to_csv('NonAxisSymetricIV.csv',
+          float_format='%1.2f',
+          index_label='Orbit')
 
-fig2.tight_layout()
-fig2.savefig('EnergyMomentumPlot.pdf')
-
-#%%
-head='Orbit,$x$,$y$,$v_x$,$v_y$'
-csvArray=[[1   ,x10[0],x10[1],v10[0],v10[1],],
-          [2   ,x20[0],x20[1],v20[0],v20[1],],
-          [3   ,x30[0],x30[1],v30[0],v30[1],]]
-
-np.savetxt('ToomreOrbitsData.csv',csvArray,
-           delimiter=',',fmt='%1.3f', header=head)
