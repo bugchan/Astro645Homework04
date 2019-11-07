@@ -32,47 +32,87 @@ Ecrit=2 #
 x0=np.array([-1.3*np.pi,.5,np.pi-e])
 v0=np.array([1.3,0,0])
 
-T=1 #Period
-
-a=0
-b=T*10000
-h=0.1
 IV=np.concatenate((x0.reshape(3,1),v0.reshape(3,1)),
                   axis=1)
+
+a=0
+b=10000
+herror=1 #starting h for loop
+h=.1 #for RK4
+itera=14
 
 #%%Rotation
 print('Starting calculating pendulum in rotation')
 print('Doing Leapfrog')
-tRot,xRot,vRot=NI.leapfrog2D(dvdt,a,b,h,IV[0],dim=1)
+
+# leapfrog with different h to calculate the error
+xRotA=np.zeros(itera)
+vRotA=np.zeros(itera)
+tRotA=np.zeros(itera)
+hArray=herror/(2**np.arange(itera))
+for i in np.arange(itera):
+    print('iter:',i,', h:',hArray[i])
+    tRot,xRot,vRot=NI.leapfrog2D(dvdt,a,b,hArray[i],
+                                 IV[0],dim=1)
+    tRotA[i]=tRot[-1]
+    xRotA[i]=xRot[-1]
+    vRotA[i]=vRot[-1]
+errorxRot=np.abs(xRotA[1:]-xRotA[0:-1])
+errorvRot=np.abs(vRotA[1:]-vRotA[0:-1])
+errorh=hArray**2
+
 print('Doing RK4')
 tRotRK,xRotRK,vRotRK=NI.RK4(dvdt,a,b,h,IV[0],dim=1)
 ERot=energy(vRot,xRot)
 ERotRK=energy(vRotRK,xRotRK)
-errRot=ERot-ERotRK
 
-plt.plot(xRot,vRot,'--',label='Rotation')
-print('Energy:',ERot)
+#plt.plot(xRot,vRot,'--',label='Rotation')
+#print('Energy:',ERot)
 
 #%%Libration
 print('Starting calculating pendulum in libration')
 print('Doing Leapfrog')
-tLib,xLib,vLib=NI.leapfrog2D(dvdt,a,b,h,IV[1],dim=1)
+
+# leapfrog with different h to calculate the error
+xLibA=np.zeros(itera)
+vLibA=np.zeros(itera)
+tLibA=np.zeros(itera)
+for i in np.arange(itera):
+    print('iter:',i,', h:',hArray[i])
+    tLib,xLib,vLib=NI.leapfrog2D(dvdt,a,b,hArray[i],
+                                 IV[1],dim=1)
+    tLibA[i]=tLib[-1]
+    xLibA[i]=xLib[-1]
+    vLibA[i]=vLib[-1]
+errorxLib=np.abs(xLibA[1:]-xLibA[0:-1])
+errorvLib=np.abs(vLibA[1:]-vLibA[0:-1])
+
 print('Doing RK4')
-tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,h,IV[1],dim=1)
+tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,hArray[-1],IV[1],dim=1)
 ELib=energy(vLib, xLib)
 ELibRK=energy(vLibRK, xLibRK)
-errLib=ELib-ELibRK
 
 #%%Near unstable position
 print('Starting calculating pendulum near unstable position')
 print('Doing Leapfrog')
-tUns, xUns,vUns=NI.leapfrog2D(dvdt,a,b,h,IV[2],dim=1)
+#% leapfrog with different h to calculate the error
+xUnsA=np.zeros(itera)
+vUnsA=np.zeros(itera)
+tUnsA=np.zeros(itera)
+for i in np.arange(itera):
+    print('iter:',i,', h:',hArray[i])
+    tUns,xUns,vUns=NI.leapfrog2D(dvdt,a,b,hArray[i],
+                                 IV[2],dim=1)
+    tUnsA[i]=tUns[-1]
+    xUnsA[i]=xUns[-1]
+    vUnsA[i]=vUns[-1]
+errorxUns=np.abs(xUnsA[1:]-xUnsA[0:-1])
+errorvUns=np.abs(vUnsA[1:]-vUnsA[0:-1])
+
 print('Doing RK4')
 tUnsRK,xUnsRK,vUnsRK=NI.RK4(dvdt,a,b,h,IV[2],dim=1)
 EUns=energy(vUns,xUns)
 EUnsRK=energy(vUnsRK,xUnsRK)
-errUns=EUns-EUnsRK
-
 
 #%% Plot Phase Space Curve
 width,height=SP.setupPlot(singleColumn=True)
@@ -106,33 +146,33 @@ fig1.savefig('PendulumPhaseSpace.pdf')
 
 #%% Plot Energy vs time
 #width,height=SP.setupPlot(singleColumn=True)
-fig2 = plt.figure(figsize=(width,height))
-grid1 = plt.GridSpec(1,1)
-
-ax2 = fig2.add_subplot(grid1[0,0])
-ax2.plot(tRot,ERot,'--',label='Rotation Leapfrog')
-ax2.plot(tRotRK,ERotRK,'--',label='RotationRK')
-#ax2.plot(tLib,ELib,'-.',label='Libration')
-#ax2.plot(tUns,EUns,':',label='Near Unstable Equilibrium')
-#ax2.hlines(Ecrit,a,b,label='Critical Energy')
-ax2.set_xlabel('Time [s]')
-ax2.set_xlim(a,b)
-ax2.set_ylabel('Total Energy $E_T$ []')
-ax2.grid()
-ax2.legend(loc='lower right')
+#fig2 = plt.figure(figsize=(width,height))
+#grid1 = plt.GridSpec(1,1)
+#
+#ax2 = fig2.add_subplot(grid1[0,0])
+#ax2.plot(tRot,ERot,'--',label='Rotation Leapfrog')
+#ax2.plot(tRotRK,ERotRK,'--',label='RotationRK')
+##ax2.plot(tLib,ELib,'-.',label='Libration')
+##ax2.plot(tUns,EUns,':',label='Near Unstable Equilibrium')
+##ax2.hlines(Ecrit,a,b,label='Critical Energy')
+#ax2.set_xlabel('Time [s]')
+#ax2.set_xlim(a,b)
+#ax2.set_ylabel('Total Energy $E_T$ []')
+#ax2.grid()
+#ax2.legend(loc='lower right')
 
 #%%  Phase Space Plot of Unstable equilibrium
-width,height=SP.setupPlot(singleColumn=True)
-fig3 = plt.figure(figsize=(width,height))
-#grid1 = plt.GridSpec(1,1)
-
-ax3 = fig3.add_subplot(grid1[0,0])
-ax3.plot(xUns,vUns,':',label='Leapfrog')
-ax3.plot(xUnsRK,vUnsRK,':',label='RK4')
-ax3.set_title('Unstable Equilibrium')
-ax3.set_xlim(-1.1*np.pi,1.1*np.pi)
-ax3.grid()
-ax3.legend(loc='lower right')
+#width,height=SP.setupPlot(singleColumn=True)
+#fig3 = plt.figure(figsize=(width,height))
+##grid1 = plt.GridSpec(1,1)
+#
+#ax3 = fig3.add_subplot(grid1[0,0])
+#ax3.plot(xUns,vUns,':',label='Leapfrog')
+#ax3.plot(xUnsRK,vUnsRK,':',label='RK4')
+#ax3.set_title('Unstable Equilibrium')
+#ax3.set_xlim(-1.1*np.pi,1.1*np.pi)
+#ax3.grid()
+#ax3.legend(loc='lower right')
 
 #%% Plot comparing Leapfrog and RK4
 width,height=SP.setupPlot(singleColumn=True)
@@ -175,11 +215,34 @@ ax4.grid()
 ax4.legend(loc='upper left')
 
 fig4.tight_layout()
+fig4.savefig('PendulumRK4vsLeapfrog.pdf')
 
-#%% Error plot
-width,height=SP.setupPlot(singleColumn=False)
-fig5 = plt.figure(figsize=(width,height))
-gridf5 = plt.GridSpec(1,1)
+#%% Error vs stepsize
+
+width,height=SP.setupPlot(singleColumn=True)
+fig5 = plt.figure(figsize=(1.5*width,.6*height))
+gridf5 = plt.GridSpec(1,3)
 
 ax7 = fig5.add_subplot(gridf5[0,0])
-ax7.plot(errLib)
+ax7.loglog(hArray[1:],errorxRot,label='x')
+ax7.loglog(hArray[1:],errorvRot,label='v')
+ax7.loglog(hArray[1:],1000*errorh[1:],label=r'$h^2$')
+ax7.legend()
+ax7.set_title('Rotation')
+
+ax8 = fig5.add_subplot(gridf5[0,1])
+ax8.loglog(hArray[1:],errorxLib,label='x')
+ax8.loglog(hArray[1:],errorvLib,label='v')
+ax8.loglog(hArray[1:],1000*errorh[1:],label=r'$h^2$')
+ax8.legend()
+ax8.set_title('Libration')
+
+ax9 = fig5.add_subplot(gridf5[0,2])
+ax9.loglog(hArray[1:],errorxUns,label='x')
+ax9.loglog(hArray[1:],errorvUns,label='v')
+ax9.loglog(hArray[1:],1000*errorh[1:],label=r'$h^2$')
+ax9.legend()
+ax9.set_title('Near Uns Equilibrium')
+
+fig5.tight_layout()
+fig5.savefig('PendulumErrorvsStepsize.pdf')
