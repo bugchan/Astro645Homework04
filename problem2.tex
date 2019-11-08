@@ -1,23 +1,47 @@
 \section{Symplectic integration.}
 
-Generalize your ODE program for integrating and plotting the equations of motion using the symplectic leapfrog integrator. I did not have
-time to discuss this algorithm in class today, but I’m attaching a brief
-introduction as an appendix to get you started. I will discuss this at the
-beginning of class next Thursday.
-The equation of motion of the pendulum is given by
-\begin{equation}
-    \Ddot{\theta}=-\sin\theta
-\end{equation}
+% Generalize your ODE program for integrating and plotting the equations of motion using the symplectic leapfrog integrator. I did not have
+% time to discuss this algorithm in class today, but I’m attaching a brief
+% introduction as an appendix to get you started. I will discuss this at the
+% beginning of class next Thursday.
+A symplectic integrator is an integrator that conserve phase-space volume and Poincar\' e invariants (Appendix D.4.2)
+
+Explain Leapfrog 
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %=========================SUBSECTION===========================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{}
-(a) As a test, use this integrate the pendulum equations of motion in
-all regimes:
-i. rotation,
-ii. libration,
-iii. near the unstable equilibrium
+% (a) As a test, use this integrate the pendulum equations of motion in
+% all regimes:
+% i. rotation,
+% ii. libration,
+% iii. near the unstable equilibrium
+We can test our leapfrog code by integrating the equation of motion of the pendulum. 
+
+The equation of motion of the pendulum is given by
+\begin{equation}
+    \Ddot{\theta}=-\sin\theta.
+\end{equation}
+
+We can determine 3 scenarios:
+\begin{itemize}
+    \item Rotation
+    Rotation is when the total energy given by
+    \begin{equation}
+    E=\frac{1}{2}\Dot{\theta}^2+\left(1+\cos\theta\right)
+    \end{equation}
+    is bigger than the critical energy. The critical energy is 
+    
+    \item Libration
+    \item Near Unstable Equilibrium
+\end{itemize}
+
+The total energy is
 
 
 
