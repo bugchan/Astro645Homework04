@@ -15,9 +15,50 @@ real three body problem has chaotic trajectories!
 %=========================SUBSECTION===========================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{}
-(a) Again, pick some initial conditions and integrate the orbits. Just
-to be definite a = 1=2 (although the problem scales with a so you
-can choose value you wanted and get the same results).
+% (a) Again, pick some initial conditions and integrate the orbits. Just
+% to be definite a = 1=2 (although the problem scales with a so you
+% can choose value you wanted and get the same results).
+
+The equations of motion for this potential are
+\begin{align*}
+    F&=-\nabla U(r) =-(\frac{\partial U(r)}{\partial x}+\frac{\partial U(r)}{\partial y}\\
+    \Ddot{x}&=-\left[\frac{x-a}{(x-a)^2+y^2}+\frac{x+a}{(x+a)^2+y^2}\right] \\
+    \Ddot{y}&=- \left[\frac{y}{(x-a)^2+y^2}+\frac{y}{(x+a)^2+y^2}\right]
+\end{align*}
+
+This can be evaluated using the initial conditions listed in table \ref{tab:NonAxisSymetric} and $a= \frac{1}{2}$.
+
+\begin{table}
+  \begin{center}
+    \caption{Initial values used for calculating each rosette orbit using the Toomre potential.}
+    \label{tab:NonAxisSymetric}
+    \pgfplotstabletypeset[
+      col sep=comma, % the separator in our .csv file
+      every head row/.style={
+		before row={\toprule}, % have a rule at top
+		after row={\midrule}}, % rule under units
+	  every last row/.style={after row=\bottomrule}, % rule at bottom
+    ]{CodeAndFigures/NonAxisSymetricIV.csv} % filename/path to file
+  \end{center}
+\end{table}
+
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{lrrrrrr}
+    \toprule \\
+    Orbit &    x &    y &  $v_x$ &  $v_y$ &  $r_{inner}$ &  $r_{outer}$\\
+    \midrule \\
+    0 &  0.3 &  0.0 &  0.3 &  0.4 &    0.22 &   0.61 \\
+    1 &  0.0 &  0.5 &  0.6 &  0.0 &    0.50 &   0.78 \\
+    2 &  1.0 &  0.0 &  0.0 &  1.0 &    1.00 &   4.10 \\
+    \bottomrule\\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %=========================SUBSECTION===========================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
