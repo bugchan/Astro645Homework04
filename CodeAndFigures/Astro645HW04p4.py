@@ -181,14 +181,18 @@ fig1.savefig('NonAxisSymetricPhaseSpace.pdf')
 ##fig2.savefig('EnergyMomentumPlot.pdf')
 
 #%% Save Data to csv file
-names=np.array(['x'    ,'y'   , 'v_x','v_y'])
-orbit1=np.array([x10[0],x10[1],v10[0],v10[1]])
-orbit2=np.array([x20[0],x20[1],v20[0],v20[1]])
-orbit3=np.array([x30[0],x30[1],v30[0],v30[1]])
+names=np.array(['x'    ,'y'   , '$v_x$','$v_y$'])
+indexNames=['Orbit 1','Orbit 2','Orbit 3']
+row1=np.array([x10[0],x10[1],v10[0],v10[1]])
+row2=np.array([x20[0],x20[1],v20[0],v20[1]])
+row3=np.array([x30[0],x30[1],v30[0],v30[1]])
 
-array=[orbit1, orbit2, orbit3]
-df = pd.DataFrame(array,columns=names)
-df.to_csv('NonAxisSymetricIV.csv',
-          float_format='%1.2f',
-          index_label='Orbit')
+rows=[row1, row2, row3]
+
+df = pd.DataFrame(rows,columns=names,index=indexNames)
+
+with open('NonAxisSymetricIV.tex','w') as tf:
+    tf.write(df.to_latex(float_format='%2.2f',
+                         index=True,
+                         escape=False))
 
