@@ -20,20 +20,11 @@ This is a differential equation that can be solved using leapfrog integration.
 
 Using the initial values listed on table \ref{tab:ToomreOrbits}, we can calculate the orbits for each case. Figure \ref{fig:ToomreOrbits} shows that the orbits are not close but they precess. These types of orbits are called rosette orbits because of the shape or tube orbits because they have an inner and outer boundary.
 
-\begin{table}
-  \begin{center}
-    \caption{Initial values used for calculating each rosette orbit using the Toomre potential.}
-    \label{tab:ToomreOrbits}
-    \pgfplotstabletypeset[
-      col sep=comma, % the separator in our .csv file
-      every head row/.style={
-		before row={\toprule}, % have a rule at top
-		after row={
- 			\midrule} % rule under units
- 			},
-	  every last row/.style={after row=\bottomrule}, % rule at bottom
-    ]{CodeAndFigures/ToomreOrbitsData.csv} % filename/path to file
-  \end{center}
+\begin{table}[]
+    \centering
+\input{CodeAndFigures/ToomreOrbitsData.tex}
+    \caption{Caption}
+    \label{tab:ToomreOrbitIV}
 \end{table}
 
 These systems have two conserved quantities, the total energy $E_T$ and angular momentum $L$. Using the initial conditions, one can calculate the total energy of the system,
