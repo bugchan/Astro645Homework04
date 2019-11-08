@@ -69,10 +69,10 @@ t2,x2,v2=NI.leapfrog2D(dvdt,A,B,h,IV)
 U2,K2,E2=totalEnergy(x2,v2)
 
 #%% Orbit 3
-#x30=np.array([3,0])
-#v30=np.array([0,0.6])
-x30=np.array([0,1])
-v30=np.array([0.9,0])
+x30=np.array([3,0])
+v30=np.array([0,0.6])
+#x30=np.array([0,1])
+#v30=np.array([0.9,0])
 #x30=np.array([0,1.1])
 #v30=np.array([.01,0.301])
 
@@ -182,7 +182,7 @@ fig1.savefig('NonAxisSymetricPhaseSpace.pdf')
 
 #%% Save Data to csv file
 names=np.array(['x'    ,'y'   , '$v_x$','$v_y$'])
-indexNames=['Orbit 1','Orbit 2','Orbit 3']
+indexNames=['Orbit 0','Orbit 1','Orbit 2']
 row1=np.array([x10[0],x10[1],v10[0],v10[1]])
 row2=np.array([x20[0],x20[1],v20[0],v20[1]])
 row3=np.array([x30[0],x30[1],v30[0],v30[1]])
