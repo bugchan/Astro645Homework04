@@ -4,6 +4,9 @@
 Created on Tue Oct 29 16:00:37 2019
 
 @author: Sandra Bustamante
+
+Orbits in an axisymmetric potential
+
 """
 
 import numpy as np
@@ -252,17 +255,36 @@ fig2.tight_layout()
 fig2.savefig('EnergyMomentumPlot.pdf')
 
 #%% Save values to csv file
-names=np.array(['x','y',
-                'v_x','v_y',
-                'r_{inner}','r_{outer}'])
-orbit1=np.array([x10[0],x10[1],v10[0],v10[1],r1min,r1max])
-orbit2=np.array([x20[0],x20[1],v20[0],v20[1],r2min,r2max])
-orbit3=np.array([x30[0],x30[1],v30[0],v30[1],r3min,r3max])
+names=np.array(['Orbit','x','y',
+                '$v_x$','$v_y$',
+                '$r_{inner}$','$r_{outer}$'])
+orbit1=np.array([1,x10[0],x10[1],v10[0],v10[1],r1min,r1max])
+orbit2=np.array([2,x20[0],x20[1],v20[0],v20[1],r2min,r2max])
+orbit3=np.array([3,x30[0],x30[1],v30[0],v30[1],r3min,r3max])
 
-a=[orbit1, orbit2, orbit3]
-df = pd.DataFrame(a,columns=names)
-df.to_csv('ToomreOrbitsData.csv', float_format='%1.2f',index_label='Orbit')
-df.to_latex(bold_rows=True,)
+rows=[orbit1, orbit2, orbit3]
+
+df = pd.DataFrame(rows,columns=names)
+#df.to_csv('ToomreOrbitsData.csv', float_format='%1.2f',index_label='Orbit')
 
 with open('ToomreOrbitsData.tex','w') as tf:
-    tf.write(df.to_latex(bold_rows=True,))
+    tf.write(df.to_latex(float_format='%1.2f',
+                         index=False,
+                         escape=False))
+
+""" continue reading for formatters and
+how to apply special names to the indexes
+https://stackoverflow.com/questions/15069814/formatting-latex-to-latex-output
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_latex.html
+
+Code in Latex:
+\begin{table}[]
+    \centering
+    \input{CodeAndFigures/ToomreOrbitsData.tex}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+"""
+
+

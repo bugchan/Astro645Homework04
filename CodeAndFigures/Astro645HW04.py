@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import scipy.constants as constants
 import NumericIntegrations as NI
 import SetupPlots as SP
+import pandas as pd
 
 #%% Definitions
 def dvdt(t,x,v):
@@ -247,3 +248,35 @@ ax9.set_title('Near Uns Equilibrium')
 
 fig5.tight_layout()
 fig5.savefig('PendulumErrorvsStepsize.pdf')
+
+#%% Save values to csv file
+names=np.array(['$\theta$','$\ddot{\theta}$'])
+indexNames=['Rotation','Libration','Near Uns Eq']
+row1=np.array([IV[0,0],IV[0,1]])
+row2=np.array([IV[1,0],IV[1,1]])
+row3=np.array([IV[2,0],IV[2,1]])
+
+rows=[row1, row2, row3]
+
+df = pd.DataFrame(rows,columns=names,index=indexNames)
+#df.to_csv('ToomreOrbitsData.csv', float_format='%1.2f',index_label='Orbit')
+
+with open('PendulumData.tex','w') as tf:
+    tf.write(df.to_latex(float_format='%2.2f',
+                         index=True,
+                         escape=False))
+
+#""" continue reading for formatters and
+#how to apply special names to the indexes
+#https://stackoverflow.com/questions/15069814/formatting-latex-to-latex-output
+#https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_latex.html
+#
+#Code in Latex:
+#\begin{table}[]
+#    \centering
+#    \input{CodeAndFigures/ToomreOrbitsData.tex}
+#    \caption{Caption}
+#    \label{tab:my_label}
+#\end{table}
+#
+#"""
