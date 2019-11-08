@@ -28,6 +28,7 @@ def energy(v,x):
 
 e=1e-2
 Ecrit=2 #
+names=['rotation','libration','Near Uns Eq']
 #rotation,libration, near unstable equilibrium
 x0=np.array([-1.3*np.pi,.5,np.pi-e])
 v0=np.array([1.3,0,0])
@@ -39,7 +40,7 @@ a=0
 b=10000
 herror=1 #starting h for loop
 h=.1 #for RK4
-itera=14
+itera=12
 
 #%%Rotation
 print('Starting calculating pendulum in rotation')
@@ -88,7 +89,7 @@ errorxLib=np.abs(xLibA[1:]-xLibA[0:-1])
 errorvLib=np.abs(vLibA[1:]-vLibA[0:-1])
 
 print('Doing RK4')
-tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,hArray[-1],IV[1],dim=1)
+tLibRK,xLibRK,vLibRK=NI.RK4(dvdt,a,b,h,IV[1],dim=1)
 ELib=energy(vLib, xLib)
 ELibRK=energy(vLibRK, xLibRK)
 
@@ -99,7 +100,7 @@ print('Doing Leapfrog')
 xUnsA=np.zeros(itera)
 vUnsA=np.zeros(itera)
 tUnsA=np.zeros(itera)
-for i in np.arange(itera):
+for i in np.arange(itera ):
     print('iter:',i,', h:',hArray[i])
     tUns,xUns,vUns=NI.leapfrog2D(dvdt,a,b,hArray[i],
                                  IV[2],dim=1)

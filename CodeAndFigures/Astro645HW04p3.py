@@ -95,10 +95,6 @@ LL1=angularMomentum(x1,v1)
 EL1=totalEnergy(x1,v1)
 LL1=angularMomentum(x1,v1)
 
-##Calculate inner and outer radius using leapfrog values.
-#U1=potential(x1)
-#r1=1/np.sqrt(2*(E1-U1)/L1**2)
-
 #%% Second Orbit
 
 #Setup initial values
@@ -266,3 +262,7 @@ orbit3=np.array([x30[0],x30[1],v30[0],v30[1],r3min,r3max])
 a=[orbit1, orbit2, orbit3]
 df = pd.DataFrame(a,columns=names)
 df.to_csv('ToomreOrbitsData.csv', float_format='%1.2f',index_label='Orbit')
+df.to_latex(bold_rows=True,)
+
+with open('ToomreOrbitsData.tex','w') as tf:
+    tf.write(df.to_latex(bold_rows=True,))
