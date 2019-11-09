@@ -1,7 +1,7 @@
 \section{Non-axisymmetric orbits}
 
-Finally, a more complicated non-axisymmetric case—two fixed point
-masses—which has the potential:
+A potential of a non-axisymmetric case with two fixed point
+masses is given by:
 \begin{equation}
     U(x,y) = -[(x-a)^2 +y^2]^{-1/2} -[(x+a)^2 +y^2]^{-1/2}.
     \label{eq:non-axisymmetric}
@@ -15,17 +15,18 @@ masses—which has the potential:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %=========================SUBSECTION===========================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
+% \subsection{}
 % (a) Again, pick some initial conditions and integrate the orbits. Just
 % to be definite a = 1=2 (although the problem scales with a so you
 % can choose value you wanted and get the same results).
 
-The equations of motion for this potential are
+By integrating the potential you can find the equations of motions. In this case, they are
 \begin{align*}
     F&=-\nabla U(r) =-(\frac{\partial U(r)}{\partial x}+\frac{\partial U(r)}{\partial y}\\
     \Ddot{x}&=-\left[\frac{x-a}{(x-a)^2+y^2}+\frac{x+a}{(x+a)^2+y^2}\right] \\
     \Ddot{y}&=- \left[\frac{y}{(x-a)^2+y^2}+\frac{y}{(x+a)^2+y^2}\right]
 \end{align*}
+
 
 This can be evaluated using the initial conditions listed in table \ref{tab:nonaxisIV} and $a= \frac{1}{2}$.
 
@@ -44,7 +45,9 @@ This can be evaluated using the initial conditions listed in table \ref{tab:nona
     \label{fig:nonaxisOrbits}
 \end{figure*}
 
-Figure \ref{fig:nonaxisOrbits} shows three orbits.
+Figure \ref{fig:nonaxisOrbits} shows three orbits by using Leapfrog integration and the initial conditions listed in Table \ref{tab:nonaxisIV} for \SI{100}{\s}. Orbit 1 and Orbit 2 are considered box orbits while Orbit 3 is a tube orbit. 
+Box orbits are orbits that passes close to every point inside a box in the center. 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %=========================SUBSECTION===========================
@@ -56,6 +59,7 @@ Figure \ref{fig:nonaxisOrbits} shows three orbits.
 % there are two cases of box orbits here: those which come close to
 % one and those which come close to both centers of force. Find an
 % example of each case.
+
 
 
 
