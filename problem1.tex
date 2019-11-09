@@ -3,11 +3,47 @@
 As we know, the apocenter $r_a$ and pericenter $r_p$ of an orbit in a spherical stellar system is given by the roots of
 \begin{equation}
     2(E -V(r))- \frac{J^2}{r^2}= 0.
+    \label{eq:sphericsystem}
 \end{equation} 
 
-Prove that this equation has either zero or two roots assuming that the orbit is bound $(E < 0)$ and the potential $V(r)$ is physically realizable (that is: it corresponds to a mass distribution with finite density).
+To derived equation \ref{eq:sphericsystem} twice, we need to substitute r=1/u and apply the chain rule.
+\begin{align*}
+    2(E -V(1/u)) - J^2u^2&\\
+    \frac{d}{du}\left( 2(E -V(1/u)) - J^2u^2 \right)&\\
+    -2 \frac{dV(f(u))}{df(u)}\frac{df(u)}{du} - 2J^2u&\\
+    2 \frac{1}{u^2}\frac{dV(f(u))}{df(u)} - 2J^2u&
+\end{align*}
 
-[Hints: (i) Change variables to $u = 1/r$; (ii) use the Poisson equation
-after taking the second derivative of equation (1).]
+For the second derivative we need apply the chain rule again, 
+\begin{align*}
+    \frac{d}{du}\left(2 \frac{1}{u^2}\frac{dV(f(u))}{df(u)} - 2J^2u \right) &\\
+    2 \frac{d}{df(u)}\left(\frac{1}{u^2}\frac{dV(f(u))}{df(u)}\right)\frac{df(u)}{du} - 2J^2 &\\
+    2 \frac{-1}{u^2}\frac{d}{df(u)}\left(\frac{1}{u^2}\frac{dV(f(u))}{df(u)}\right) - 2J^2 &\\
+    -2 r^2 \frac{d}{dr}\left(r^2\frac{dV(r)}{dr}\right) - 2J^2&
+\end{align*}
+where $f(u)=1/u=r$ and $f'(u)=-1/u^2=-r^2$.
+This last equation is similar to Poisson equation for spherical coordinates
+\begin{equation}
+    \nabla^2 V= r^2\frac{d}{dr}\left(r^2\frac{dV}{dr}\right) = 4\pi G\rho
+\end{equation}
+So by usign Poisson equation,
+\begin{align*}
+    -2 r^2 \frac{d}{dr}\left(r^2\frac{dV(r)}{dr}\right) - 2J^2 \\
+    -2 (4\pi G\rho) - 2J^2
+\end{align*}
+we can note that the second derivative is negative. This tells us that the function has a local maximum. By taking the limits of \ref{eq:sphericsystem} when $r\to [0,\infty]$ we find that:
+\begin{align*}
+    &\lim_{r\to 0} 2(E -V(r))- \frac{J^2}{r^2}= -\infty\\
+    &\lim_{r\to\infty} 2(E -V(r))- \frac{J^2}{r^2}=2(E -V(r))\\
+\end{align*}
+In the latter case, we know that $(E < 0)$ since the orbit is bound making the expression also negative.
+
+Using both of these methods (second derivative and limits) being negative, we showed that the function is concave down from $r=0$ to infinity. If the local maximum is above the plane, then the function will have two roots and if it is below the plane it will have zero roots.
+
+% Prove that this equation has either zero or two roots assuming that the orbit is bound  and the potential $V(r)$ is physically realizable (that is: it corresponds to a mass distribution with finite density).
+
+% [Hints: (i) Change variables to $u = 1/r$; (ii) use the Poisson equation
+% after taking the second derivative of equation (1).]
 
 \clearpage
+

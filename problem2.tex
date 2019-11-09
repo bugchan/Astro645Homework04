@@ -4,25 +4,27 @@
 % time to discuss this algorithm in class today, but I’m attaching a brief
 % introduction as an appendix to get you started. I will discuss this at the
 % beginning of class next Thursday.
-A symplectic integrator is an integrator that conserve phase-space volume and Poincar\' e invariants \cite{BinneyT_}
-
-Explain Leapfrog 
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%=========================SUBSECTION===========================
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
 % (a) As a test, use this integrate the pendulum equations of motion in
 % all regimes:
 % i. rotation,
 % ii. libration,
 % iii. near the unstable equilibrium
-We can test our leapfrog code by integrating the equation of motion of the pendulum. 
+% (b) Demonstrate that the leapfrog integrator is second-order accurate
+% in the sense that errors in $\mathbf{q}$ and $\mathbf{p}$ after a timestep $h$ are $O(h^3)$.
+% (c) Compute the energy conservation for the trajectories in each regime
+% over about 10,000 orbital periods. Compare the energy conservation for RK4 and leapfrog.
 
+A symplectic integrator is an integrator that conserve phase-space volume and Poincar\' e invariants \cite{BinneyT_}
+
+Leapfrog integrator is a second order method that integrates ordinary differential equations. It updates the position and velocity at interleaved times. The algorithm is being implemented is of the sequence drift-kick-drift. A drift is when the position $\Vec{q}$ changes but not the momentum $\Vec{p}$ and a kick is the inverse, momentum changes but not the position. The algorithm is
+\begin{align*}
+    \Vec{q}_{1/2}&=\Vec{q}_0+\frac{1}{2}h\Vec{p_0}\\
+    \Vec{p}&=\Vec{p}_0 + h F(\Vec{q}_{1/2})\\
+    \Vec{q}&=\Vec{q}_0 + \frac{1}{2}h\Vec{p}
+\end{align*}
+where $F(\Vec{q}_{1/2})$
+
+We can test the leapfrog algorithm using the pendulum. 
 The equation of motion of the pendulum is given by
 \begin{equation}
     \Ddot{\theta}=-\sin\theta.
@@ -50,20 +52,6 @@ We can determine 3 scenarios:
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%=========================SUBSECTION===========================
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
-(b) Demonstrate that the leapfrog integrator is second-order accurate
-in the sense that errors in $\mathbf{q}$ and $\mathbf{p}$ after a timestep $h$ are $O(h^3)$.
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%=========================SUBSECTION===========================
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
-(c) Compute the energy conservation for the trajectories in each regime
-over about 10,000 orbital periods. Compare the energy conservation for RK4 and leapfrog.
 
 \clearpage
