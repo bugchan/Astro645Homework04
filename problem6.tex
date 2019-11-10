@@ -1,28 +1,54 @@
 \section{The Jacobi Integral}
-
-Recall the Jacobi integral discussed in class.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%=========================SUBSECTION===========================
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
-Show that the Jacobi integral is a constant of the motion, i.e.
+% Recall the Jacobi integral discussed in class.
+% \subsection{}
+% Show that the Jacobi integral is a constant of the motion, i.e. $\frac{dE_j}{dt}=0$
+The Jacobi integral in a rotating non axisymmetric potential is 
 \begin{equation}
-    \frac{dE_j}{dt}=0
+    E_J=\frac{1}{2}\Dot{x}^2 + \Phi(\mathbf{x}) - \frac{1}{2}\left|\mathbf{\Omega}_b \times \mathbf{x}\right|^2
 \end{equation}
+where $\mathbf{\Omega}_b$ is the constant rotation speed of the system whose direction is along the axis of rotation
 
+It can be shown that it is a constant of motion by deriving with respect to time,
+\begin{align*}
+     \frac{dE_j}{dt}&=\frac{d}{dt}\left(\frac{1}{2}\Dot{x}^2 
+     +\Phi(\mathbf{x}) 
+     -\frac{1}{2}|\mathbf{\Omega}_b\times\mathbf{x}|^2\right)\\
+     &=\Dot{x}\Ddot{x}+\Dot{x}\frac{d\Phi(\mathbf{x})}{d\mathbf{x}}-\frac{1}{2}\frac{d}{dt}\left(\Omega_b^2x^2 - (\mathbf{\Omega}_b\cdot\mathbf{x})^2\right)\\
+     &=\Dot{x}\Ddot{x}+\Dot{x}\nabla\Phi(\mathbf{x})-\dot{\mathbf{x}}\Omega_b^2\mathbf{x}+ 
+     \dot{\mathbf{x}}\mathbf{\Omega}_b(\mathbf{\Omega}_b\cdot\mathbf{x})\\
+\end{align*}
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%=========================SUBSECTION===========================
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{}
-
-Show that the Jacobi integral for an orbit may be written as:
+From Hamilton's equation we can find that 
 \begin{equation}
-    E_J = E - \mathbf{\Omega}_p \cdot \mathbf{L}
+    \Ddot{x}=-\nabla\Phi(\mathbf{x})-2\mathbf{\Omega}_b\times\dot{\mathbf{x}}+\mathbf{\Omega}_b^2\mathbf{x}-\mathbf{\Omega}_b(\mathbf{\Omega}_b\cdot\mathbf{x})
 \end{equation}
-where $\mathbf{\Omega}_p$ is the constant rotation speed of the system whose direction is along the axis of rotation and $L$ is the angular momentum of the orbit.
+so substituting this into our equation and using the identity $A\cdot(B\times C)=B\cdot(C\times A)$ we get that
+\begin{align*}
+    \frac{dE_J}{dt}&=2\dot{\mathbf{x}}\left(\mathbf{\Omega}_b\times\dot{\mathbf{x}}\right)\\
+    \frac{dE_j}{dt}&=2\mathbf{\Omega}_b\left(\dot{\mathbf{x}}\times\dot{\mathbf{x}}\right)
+    \frac{dE_j}{dt}&=0
+\end{align*}
+Proving that the Jacobi integral is a constant of motion.
+
+Additionally, knowing that the momentum in the underlying inertial frame can be described by $p=\dot{x}+\Omega_b\times x$,we can rewrite the Jacobi integral as
+\begin{align*}
+    E_J&=\frac{1}{2}\left(\mathbf{p}-\mathbf{\Omega}_b\times \mathbf{x}\right)^2 + \Phi(\mathbf{x}) - \frac{1}{2}\left|\mathbf{\Omega}_b \times \mathbf{x}\right|^2 \\
+    &=\frac{1}{2}\left(p^2 -2\mathbf{p}\cdot(\mathbf{\Omega}_b\times\mathbf{x}\right)
+    +\left|\mathbf{\Omega}_b \times \mathbf{x}\right|^2) + \Phi(\mathbf{x})\\
+    &\quad \quad- \frac{1}{2}|\mathbf{\Omega}_b \times \mathbf{x}|^2 \\
+    &=\frac{1}{2}p^2 -\mathbf{p}\cdot(\mathbf{\Omega}_b\times\mathbf{x})
+    + \Phi(\mathbf{x})\\
+    &=\frac{1}{2}p^2 -\mathbf{\Omega}_b\cdot(\mathbf{x}\times\mathbf{p})
+    + \Phi(\mathbf{x})\\
+    &=E-\mathbf{\Omega}_b\cdot\mathbf{L}
+\end{align*}
+where the total energy $E=\frac{1}{2}p^2+\Phi(\mathbf{x})$ and the angular momentum of the orbit $L=\mathbf{p}\times\mathbf{x}$.
+
+
+% Show that the Jacobi integral for an orbit may be written as:
+% \begin{equation}
+%     E_J = E - \mathbf{\Omega}_p \cdot \mathbf{L}
+% \end{equation}
+% where $\mathbf{\Omega}_p$ is the constant rotation speed of the system whose direction is along the axis of rotation and $L$ is the angular momentum of the orbit.
 
 \clearpage
