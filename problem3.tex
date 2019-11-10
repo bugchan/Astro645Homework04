@@ -4,34 +4,34 @@ Considering an axisymmetric potential for a simple model of a galaxian disk firs
     U(r) = -(1+r^2)^{-1/2},
 \end{equation}
 
-the equation of motion is given by
+We can find the equation of motion by,
 \begin{equation}
     F=-\frac{dU(r)}{dr}=-\frac{r}{(1+r^2)^{3/2}}.
 \end{equation}
-
-This is a differential equation that can be solved using leapfrog integration.
+This is a differential equation that can be solved using the leapfrog integrator.
 
 \begin{figure*}[h!]
     \centering
     \includegraphics{CodeAndFigures/ToomrePotentialOrbits.pdf}
-    \caption{Rosette Orbits using initial conditions of Left: $x=.3$, $y=0$, $v_x=.3$ and $v_y=.4$ Middle: $x=0$, $y=0.5$, $v_x=.6$ and $v_y=0$. Right:$x=1$, $y=0$, $v_x=0$ and $v_y=1$.}
+    \caption{Rosette Orbits using initial conditions listed in Table \ref{tab:ToomreOrbitIV}.}
     \label{fig:ToomreOrbits}
 \end{figure*}
 
 Using the initial values listed on table \ref{tab:ToomreOrbits}, we can calculate the orbits for each case. Figure \ref{fig:ToomreOrbits} shows that the orbits are not close but they precess. These types of orbits are called rosette orbits because of the shape or tube orbits because they have an inner and outer boundary.
 
-\begin{table}[]
+\begin{table*}[]
     \centering
 \input{CodeAndFigures/ToomreOrbitsData.tex}
-    \caption{Caption}
+    \caption{Initial conditions for the orbits in Figure \ref{fig:ToomreOrbits} and the calculated value of the inner and outer radius.}
     \label{tab:ToomreOrbitIV}
-\end{table}
+\end{table*}
 
-These systems have two conserved quantities, the total energy $E_T$ and angular momentum $L$. Using the initial conditions, one can calculate the total energy of the system,
+These systems have two conserved quantities, the total energy $E_T$ and angular momentum $L$. Using the initial conditions, one can calculate the total energy of the system given by,
 \begin{equation}
     E_T=K + U(r) = \frac{1}{2}v^2 + U(r)
 \end{equation}
-where U is the potential energy and K is the kinetic energy of the initial values, and the angular momentum by
+where U is the potential energy and K is the kinetic energy.
+The angular momentum by
 \begin{equation}
     L=r^2\Dot{\theta}
 \end{equation}
@@ -42,7 +42,8 @@ where
     \dot{r}^2 = v_x^2 + v_y^2
 \end{align}.
 
-Figure \ref{fig:conservedQuants} shows the total energy and the angular momentum of these rosette orbits are being conserved through time. 
+Figure \ref{fig:conservedQuants} shows that the total energy and the angular momentum of these rosette orbits are being conserved through time.
+
 \begin{figure*}[h]
     \centering
     \includegraphics{CodeAndFigures/EnergyMomentumPlot.pdf}
@@ -55,9 +56,9 @@ The inner and outer radius of the orbits are found by finding the roots of
     E_T - U(r) - \frac{L^2}{r^2} = 0
     \label{eq:rootfunc}
 \end{equation}
+where E and L were determined by using the initial conditions. The values for each orbit are shown in Figure \ref{fig:conservedQuants}. 
 
-The bisect method was used to find the roots. The bisect methods finds the roots of a given function within a range of values to evaluate the function. The range for $r$ was determined by first plotting the equation \ref{eq:rootfunc} and determining visually were a sign change occurred. The value for inner and outer radius for each trial orbit is listed in table \ref{tab:ToomreOrbits} and is shown in Figure \ref{fig:ToomreOrbits} in orange and green. 
-
+The bisect method was used to find the roots. The bisect methods finds the roots of a given function within a range of values to evaluate the function. The range for $r$ was determined by first plotting the equation \ref{eq:rootfunc} and determining visually were a sign change occurred. The value for inner and outer radius for each trial orbit is listed in table \ref{tab:ToomreOrbits} and is shown in Figure \ref{fig:ToomreOrbits} in orange and green. You can note that the inner and outer radius agrees with the orbit integration. 
 \clearpage
 
 
