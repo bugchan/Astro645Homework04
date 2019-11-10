@@ -8,7 +8,6 @@ Created on Tue Oct 22 14:40:25 2019
 
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.constants as constants
 import NumericIntegrations as NI
 import SetupPlots as SP
 import pandas as pd
@@ -29,7 +28,6 @@ def energy(v,x):
 
 e=1e-2
 Ecrit=2 #
-names=['rotation','libration','Near Uns Eq']
 #rotation,libration, near unstable equilibrium
 x0=np.array([-1.3*np.pi,.5,np.pi-e])
 v0=np.array([1.3,0,0])
@@ -118,17 +116,18 @@ EUnsRK=energy(vUnsRK,xUnsRK)
 
 #%% Plot Phase Space Curve
 width,height=SP.setupPlot(singleColumn=True)
-fig1 = plt.figure(figsize=(width,.5*height))
 grid = plt.GridSpec(1,2)
+fig1 = plt.figure(figsize=(width,.5*height))
+
 
 #Leapfrog
 ax1 = fig1.add_subplot(grid[0,0])
 ax1.plot(xRot,vRot,'--',label='Rotation')
 ax1.plot(xLib,vLib,'-.',label='Libration')
 ax1.plot(xUns,vUns,':',label='Near Unstable Eq')
-ax1.set_xlabel(r'Angle $\theta$ [rad]')
+ax1.set_xlabel(r'$\theta$')
 ax1.set_xlim(-1.2*np.pi,1.2*np.pi)
-ax1.set_ylabel(r'Velocity $v$ [m/s]')
+ax1.set_ylabel(r'$\dot{\theta}$')
 ax1.set_title('Leapfrog Integration')
 ax1.grid()
 
@@ -137,7 +136,7 @@ ax4 = fig1.add_subplot(grid[0,1],sharey=ax1)
 ax4.plot(xRotRK,vRotRK,'--',label='Rotation')
 ax4.plot(xLibRK,vLibRK,'-.',label='Libration')
 ax4.plot(xUnsRK,vUnsRK,':',label='Near Unstable Eq')
-ax4.set_xlabel(r'Angle $\theta$ [rad]')
+ax4.set_xlabel(r'$\theta$')
 ax4.set_xlim(-1.2*np.pi,1.2*np.pi)
 ax4.set_title('Runge-Kutta Integration')
 ax4.grid()
@@ -145,6 +144,8 @@ ax4.legend(bbox_to_anchor=(1.1, 0.6))
 
 fig1.tight_layout()
 fig1.savefig('PendulumPhaseSpace.pdf')
+#%%
+fig1.close()
 
 #%% Plot Energy vs time
 #width,height=SP.setupPlot(singleColumn=True)
@@ -178,51 +179,54 @@ fig1.savefig('PendulumPhaseSpace.pdf')
 
 #%% Plot comparing Leapfrog and RK4
 width,height=SP.setupPlot(singleColumn=True)
-fig4 = plt.figure(figsize=(width,.5*height))
+fig4 = plt.figure(figsize=(width,.55*height))
 gridf4 = plt.GridSpec(1,3)
 
 #Rotation
 ax6 = fig4.add_subplot(gridf4[0,0])
-ax6.plot(tRot,ERot,':',label='Leapfrog')
-ax6.plot(tRotRK,ERotRK,':',label='RK4')
+ax6.plot(tRot,ERot,label='Leapfrog')
+ax6.plot(tRotRK,ERotRK,label='RK4')
 ax6.set_xlim(a,b)
-ax6.set_xlabel('Time [s]')
-ax6.set_ylabel('Total Energy $E_T$ []')
+ax6.set_xlabel('Time')
+ax6.set_ylabel(r'Total Energy $E_T$')
 ax6.set_title('Rotation')
 ax6.grid()
-ax6.legend(loc='upper left')
+ax6.legend(loc='lower left')
 #ax6.set_ylim(2.43275,2.4329)
 
 #Libration
 ax5 = fig4.add_subplot(gridf4[0,1])
-ax5.plot(tLib,ELib,':',label='Leapfrog')
-ax5.plot(tLibRK,ELibRK,':',label='RK4')
+ax5.plot(tLib,ELib,label='Leapfrog')
+ax5.plot(tLibRK,ELibRK,label='RK4')
 ax5.set_xlim(a,b)
-ax5.set_xlabel('Time [s]')
+ax5.set_xlabel('Time')
 #ax5.set_ylabel('Total Energy $E_T$ []')
 ax5.set_title('Libration')
 ax5.grid()
-ax5.legend(loc='upper left')
+ax5.legend(loc='lower left')
 #ax5.set_ylim(0,.001)
 
 #Near Unstable Equilbrium
 ax4 = fig4.add_subplot(gridf4[0,2])
-ax4.plot(tUns,EUns,':',label='Leapfrog')
-ax4.plot(tUnsRK,EUnsRK,':',label='RK4')
+ax4.plot(tUns,EUns,label='Leapfrog')
+ax4.plot(tUnsRK,EUnsRK,label='RK4')
 ax4.set_xlim(a,b)
-ax4.set_xlabel('Time [s]')
+ax4.set_xlabel('Time')
 #ax4.set_ylabel('Total Energy $E_T$ []')
-ax4.set_title('Near Unstable Equilibrium')
+ax4.set_title('Near Unstable Equilibrium',pad=15)
 ax4.grid()
-ax4.legend(loc='upper left')
+ax4.legend(loc='lower left')
 
 fig4.tight_layout()
 fig4.savefig('PendulumRK4vsLeapfrog.pdf')
+#%%
+plt.close()
+
 
 #%% Error vs stepsize
 
 width,height=SP.setupPlot(singleColumn=True)
-fig5 = plt.figure(figsize=(1.5*width,.6*height))
+fig5 = plt.figure(figsize=(width,.5*height))
 gridf5 = plt.GridSpec(1,3)
 
 ax7 = fig5.add_subplot(gridf5[0,0])
@@ -230,27 +234,36 @@ ax7.loglog(hArray[1:],errorxRot,label='x')
 ax7.loglog(hArray[1:],errorvRot,label='v')
 ax7.loglog(hArray[1:],1000*errorh[1:],label=r'$h^2$')
 ax7.legend()
+ax7.set_xticks([1,1e-1,1e-2,1e-3])
 ax7.set_title('Rotation')
+ax7.grid('minor')
 
 ax8 = fig5.add_subplot(gridf5[0,1])
 ax8.loglog(hArray[1:],errorxLib,label='x')
 ax8.loglog(hArray[1:],errorvLib,label='v')
 ax8.loglog(hArray[1:],1000*errorh[1:],label=r'$h^2$')
 ax8.legend()
+ax8.set_xticks([1,1e-1,1e-2,1e-3])
 ax8.set_title('Libration')
+ax8.grid()
 
 ax9 = fig5.add_subplot(gridf5[0,2])
 ax9.loglog(hArray[1:],errorxUns,label='x')
 ax9.loglog(hArray[1:],errorvUns,label='v')
 ax9.loglog(hArray[1:],1000*errorh[1:],label=r'$h^2$')
 ax9.legend()
+ax9.set_xticks([1,1e-1,1e-2,1e-3])
 ax9.set_title('Near Uns Equilibrium')
+ax9.grid()
 
 fig5.tight_layout()
 fig5.savefig('PendulumErrorvsStepsize.pdf')
 
+#%%
+plt.close()
+
 #%% Save values to csv file
-names=np.array(['$\theta$','$\ddot{\theta}$'])
+names=np.array(['$\theta$','$\dot{\theta}$'])
 indexNames=['Rotation','Libration','Near Uns Eq']
 row1=np.array([IV[0,0],IV[0,1]])
 row2=np.array([IV[1,0],IV[1,1]])
